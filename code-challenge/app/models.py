@@ -31,3 +31,10 @@ class VendorSweet(db.Model, SerializerMixin):
     sweet = db.relationship('Sweet', back_populates='vendor_sweets')
 
 # adding validation for the vendor sweet model
+@db.validates('price')
+def validate_price(self,key,price):
+    if not price:
+        raise ValueError('Price cannot be blank')
+    if price<0:
+        raise ValueError("Price can't be negative number")
+    return price
