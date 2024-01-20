@@ -1,9 +1,10 @@
 from app import app
-from models import db,Vendor,VendorSweet,Sweet
+from models import db, Vendor, Sweet, VendorSweet
 from datetime import datetime
 
 with app.app_context():
-    Vendor = [
+    # Vendors data
+    vendors = [
         {'name': 'Vendor A'},
         {'name': 'Vendor B'},
         {'name': 'Vendor C'},
@@ -25,7 +26,9 @@ with app.app_context():
         {'name': 'Joyful Jellies'},
         {'name': 'Luscious Bites'},
     ]
-sweets = [
+
+    # Sweets data
+    sweets = [
         {'name': 'Sweet 1'},
         {'name': 'Sweet 2'},
         {'name': 'Sweet 3'},
@@ -46,18 +49,54 @@ sweets = [
         {'name': 'Butterscotch Bliss'},
         {'name': 'Coconut Carnival'},
         {'name': 'Almond Delight'},
-       
+        # ... Add more sweets
     ]
 
-for vendor_data in vendors:
+    # VendorSweets data
+    vendor_sweets = [
+        {'vendor_id': 1, 'sweet_id': 1, 'price': 200},
+        {'vendor_id': 1, 'sweet_id': 2, 'price': 300},
+        {'vendor_id': 2, 'sweet_id': 3, 'price': 250},
+        {'vendor_id': 2, 'sweet_id': 4, 'price': 180},
+        {'vendor_id': 3, 'sweet_id': 5, 'price': 220},
+        {'vendor_id': 3, 'sweet_id': 6, 'price': 350},
+        {'vendor_id': 4, 'sweet_id': 7, 'price': 280},
+        {'vendor_id': 4, 'sweet_id': 8, 'price': 200},
+        {'vendor_id': 5, 'sweet_id': 9, 'price': 300},
+        {'vendor_id': 5, 'sweet_id': 10, 'price': 240},
+        {'vendor_id': 6, 'sweet_id': 11, 'price': 260},
+        {'vendor_id': 6, 'sweet_id': 12, 'price': 320},
+        {'vendor_id': 7, 'sweet_id': 13, 'price': 180},
+        {'vendor_id': 7, 'sweet_id': 14, 'price': 300},
+        {'vendor_id': 8, 'sweet_id': 15, 'price': 250},
+        {'vendor_id': 8, 'sweet_id': 16, 'price': 280},
+        {'vendor_id': 9, 'sweet_id': 17, 'price': 220},
+        {'vendor_id': 9, 'sweet_id': 18, 'price': 320},
+        {'vendor_id': 10, 'sweet_id': 19, 'price': 280},
+        {'vendor_id': 10, 'sweet_id': 20, 'price': 200},
+        # ... Add more vendor_sweets
+    ]
+
+    # Seed vendors
+    for vendor_data in vendors:
         vendor = Vendor(**vendor_data)
         db.session.add(vendor)
-db.session.commit()
-print("🍭 Vendors seeded!")
 
-    
-for sweet_data in sweets:
+    db.session.commit()
+    print("🍭 Vendors seeded!")
+
+    # Seed sweets
+    for sweet_data in sweets:
         sweet = Sweet(**sweet_data)
         db.session.add(sweet)
-db.session.commit()
-print("🍬 Sweets seeded!")
+
+    db.session.commit()
+    print("🍬 Sweets seeded!")
+
+    # Seed vendor_sweets
+    for vs_data in vendor_sweets:
+        vendor_sweet = VendorSweet(**vs_data)
+        db.session.add(vendor_sweet)
+
+    db.session.commit()
+    print("🍭 VendorSweets seeded!")

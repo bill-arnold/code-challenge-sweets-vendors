@@ -11,7 +11,7 @@ class Vendor(db.Model, ):
     name =db.Column(db.String(255), nullable=False)
     create_at=db.Column(db.TIMESTAMP, default=datetime.utcnow, nullable=False)
     update_at=db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    vendor_sweet=db.relationship('VendorSweet', back_populates='vendor')
+    vendor_sweets = db.relationship('VendorSweet', back_populates='vendor')
 
 class Sweet(db.Model, ):
     id = db.Column(db.Integer, primary_key=True)
