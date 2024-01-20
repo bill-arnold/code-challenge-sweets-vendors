@@ -74,11 +74,20 @@ class VendorSweetsResource(Resource):
         }
 
         return response, 201
+class VendorSweetResource(Resource):
+    def delete(self, vendor_sweet_id):
+        vendor_sweet = VendorSweet.query.get(vendor_sweet_id)
 
+        if vendor_sweet:
+            db.session.delete(vendor_sweet)
+            db.session.commit()
+            return {"message": f"VendorSweet with ID {vendor_sweet_id} successfully deleted"}, 200 
+        else:
+            return {"error": "VendorSweet not found"}, 404  
     
 
     
-
+api.add_resource(VendorSweetResource, '/vendor_sweets/<int:vendor_sweet_id>')
 api.add_resource(VendorResource, '/vendors')
 api.add_resource(VendorByIdResource, '/vendors/<int:vendor_id>')
 api.add_resource(SweetsResource, '/sweets')
