@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify,request
 from flask_migrate import Migrate
 from flask_restful import Resource, Api, reqparse, abort
 from models import db, Vendor, VendorSweet, Sweet
@@ -23,27 +23,34 @@ class VendorResource(Resource):
 class VendorByIdResource(Resource):
     def get(self, vendor_id):
         vendor = Vendor.query.get(vendor_id)
-        if vendor:
-            return vendor.to_dict()
-        else:
-            abort(404, error="Vendor not found")
+        if vendor is None:
+            return {"error": "Vendor not found"}, 404
 
-    def patch(self, vendor_id):
-        # Add logic to update a vendor
-        pass
+        return vendor.to_dict()
+    
+class SweetsResource(Resource):
+    def get(self):
+        sweets = Sweet.query.all()
+        response = [sweet.to_dict() for sweet in sweets]
+        return response
 
-    def delete(self, vendor_id):
-        vendor = Vendor.query.get(vendor_id)
-        if vendor:
-            db.session.delete(vendor)
-            db.session.commit()
-            return jsonify({"message": f"Vendor with id {vendor_id} deleted successfully"})
-        else:
-            abort(404, error="Vendor not found")
+class SweetByIdResource(Resource):
+    def get(self, sweet_id):
+        sweet = Sweet.query.get(sweet_id)
+        if sweet is None:
+            return {"error": "Sweet not found"}, 404
 
-# Routes
+        return sweet.to_dict()
+
+    
+
+    
+
 api.add_resource(VendorResource, '/vendors')
 api.add_resource(VendorByIdResource, '/vendors/<int:vendor_id>')
+api.add_resource(SweetsResource, '/sweets')
+api.add_resource(SweetByIdResource, '/sweets/<int:sweet_id>')
+
 
 if __name__ == '__main__':
     app.run(port=5555)
