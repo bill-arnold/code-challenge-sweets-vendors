@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 sqlalchemy-serializer = "*"
 install = "*"
+flask-migrate = "*"
 
 [dev-packages]
 
