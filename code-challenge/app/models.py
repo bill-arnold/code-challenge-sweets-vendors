@@ -1,10 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_serializer import SerializerMixin
+#from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
 
 db = SQLAlchemy()
 
-class Vendor(db.Model):
+class Vendor(db.Model, ):
     __tablename__ = 'vendor'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,14 +13,14 @@ class Vendor(db.Model):
     update_at=db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     vendor_sweet=db.relationship('VendorSweet', back_populates='vendor')
 
-class Sweet(db.Model, SerializerMixin):
+class Sweet(db.Model, ):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     vendor_sweets = db.relationship('VendorSweet', back_populates='sweet')
 
-class VendorSweet(db.Model, SerializerMixin):
+class VendorSweet(db.Model, ):
     id = db.Column(db.Integer, primary_key=True)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), nullable=False)
     sweet_id = db.Column(db.Integer, db.ForeignKey('sweet.id'), nullable=False)
